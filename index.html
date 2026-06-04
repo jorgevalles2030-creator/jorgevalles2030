@@ -60,7 +60,7 @@
 
         .hero {
             text-align: center;
-            padding: 4rem 2rem 2rem 2rem;
+            padding: 4rem 2rem 1rem 2rem;
             max-width: 800px;
             margin: 0 auto;
         }
@@ -76,10 +76,10 @@
             font-size: 1.1rem;
         }
 
-        /* Buscador y Controles */
+        /* Buscador */
         .search-container {
             max-width: 600px;
-            margin: 2rem auto;
+            margin: 1.5rem auto 1rem auto;
             position: relative;
             padding: 0 1rem;
         }
@@ -112,6 +112,39 @@
         .search-input:focus {
             border-color: var(--primary);
             box-shadow: 0 0 15px rgba(34, 197, 94, 0.2);
+        }
+
+        /* Botones de Filtro (Categorías por Marca) */
+        .filter-container {
+            display: flex;
+            justify-content: center;
+            gap: 0.75rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            padding: 0 1rem;
+        }
+
+        .filter-btn {
+            background-color: var(--bg-card);
+            color: var(--text-main);
+            border: 1px solid var(--border);
+            padding: 0.6rem 1.5rem;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+        }
+
+        .filter-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .filter-btn.active {
+            background-color: var(--primary);
+            color: var(--bg-dark);
+            border-color: var(--primary);
         }
 
         /* Tabla de Presupuestos */
@@ -265,15 +298,23 @@
 
     <section class="hero">
         <h1>Presupuestos Online al Instante</h1>
-        <p>Buscá la marca o modelo de tu dispositivo móvil para conocer el costo estimado de la reparación. Diagnóstico profesional y componentes de alta calidad.</p>
+        <p>Filtrá por marca o buscá el modelo de tu celular para conocer los costos estimados de reparación.</p>
     </section>
 
     <!-- Buscador Inteligente -->
     <div class="search-container">
         <div class="search-wrapper">
             <i class="fa-solid fa-magnifying-glass"></i>
-            <input type="text" id="searchInput" class="search-input" placeholder="Ej: Samsung A04, módulo, batería...">
+            <input type="text" id="searchInput" class="search-input" placeholder="Ej: A04, módulo, batería...">
         </div>
+    </div>
+
+    <!-- Botones de Filtro por Categorías (Marcas) -->
+    <div class="filter-container">
+        <button class="filter-btn active" onclick="filtrarPorMarca('TODOS', this)">Todos</button>
+        <button class="filter-btn" onclick="filtrarPorMarca('SAMSUNG', this)">Samsung</button>
+        <button class="filter-btn" onclick="filtrarPorMarca('MOTOROLA', this)">Motorola</button>
+        <button class="filter-btn" onclick="filtrarPorMarca('TCL', this)">TCL</button>
     </div>
 
     <!-- Contenedor de la Tabla -->
@@ -288,7 +329,7 @@
                     </tr>
                 </thead>
                 <tbody id="tableBody">
-                    <!-- Los datos se cargan dinámicamente con JavaScript desde abajo -->
+                    <!-- Datos dinámicos -->
                 </tbody>
             </table>
             <div id="noResults" class="no-results">
@@ -311,7 +352,6 @@
                 <p><i class="fa-solid fa-envelope" style="color: var(--primary);"></i> Email: <a href="mailto:jorgevalles2030@gmail.com">jorgevalles2030@gmail.com</a></p>
                 <p><i class="fa-brands fa-instagram" style="color: var(--primary);"></i> Instagram: <a href="https://instagram.com/jor_valles" target="_blank">@jor_valles</a></p>
                 <p>¿No encontrás tu modelo? Escribinos:</p>
-                <!-- BOTÓN DE WHATSAPP: Podés cambiar el número de teléfono acá abajo en el link -->
                 <a href="https://wa.me/5491100000000?text=Hola%20Tech%20Fix,%20quería%20consultar%20un%20presupuesto" target="_blank" class="social-btn">
                     <i class="fa-brands fa-whatsapp"></i> Consultar por WhatsApp
                 </a>
@@ -323,45 +363,34 @@
         &copy; 2026 TECH FIX - Todos los derechos reservados.
     </footer>
 
-    <!-- LÓGICA DE JAVASCRIPT: ACÁ MODIFICÁS TUS PRODUCTOS -->
     <script>
-        // ==========================================
-        //  BASE DE DATOS DE PRECIOS (100% EDITABLE)
-        // ==========================================
-        // Podés cambiar los nombres, las reparaciones y los precios.
-        // Respetá siempre las comillas y las comas al final de cada línea.
-        
+        // ========================================================
+        //  BASE DE DATOS EDITABLE (Agregá la marca en cada uno)
+        // ========================================================
         const datosPrecios = [
-            { modelo: "Samsung Galaxy A04", reparacion: "Módulo de Pantalla Completo", precio: "$55.000" },
-            { modelo: "Samsung Galaxy A04", reparacion: "Cambio de Batería Original", precio: "$28.000" },
-            { modelo: "Samsung Galaxy A04", reparacion: "Pin de Carga / Puerto USB", precio: "$18.000" },
+            { marca: "SAMSUNG", modelo: "Samsung Galaxy A04", reparacion: "Módulo de Pantalla Completo", precio: "$55.000" },
+            { marca: "SAMSUNG", modelo: "Samsung Galaxy A04", reparacion: "Cambio de Batería Original", precio: "$28.000" },
+            { marca: "SAMSUNG", modelo: "Samsung Galaxy A03", reparacion: "Módulo de Pantalla Completo", precio: "$48.000" },
+            { marca: "SAMSUNG", modelo: "Samsung Galaxy J7 Prime", reparacion: "Cambio de Batería", precio: "$18.000" },
             
-            { modelo: "Samsung Galaxy A03", reparacion: "Módulo de Pantalla Completo", precio: "$48.000" },
-            { modelo: "Samsung Galaxy A03", reparacion: "Cambio de Batería Original", precio: "$26.000" },
+            { marca: "MOTOROLA", modelo: "Motorola Moto G51 5G", reparacion: "Módulo de Pantalla Completo", precio: "$60.000" },
+            { marca: "MOTOROLA", modelo: "Motorola Moto G51 5G", reparacion: "Diagnóstico de Placa / PMIC", precio: "$40.000" },
             
-            { modelo: "Samsung Galaxy A14", reparacion: "Módulo de Pantalla Completo", precio: "$62.000" },
-            { modelo: "Samsung Galaxy A14", reparacion: "Pin de Carga / Puerto USB", precio: "$20.000" },
-            
-            { modelo: "Samsung Galaxy A34 5G", reparacion: "Módulo de Pantalla (Amoled)", precio: "$95.000" },
-            { modelo: "Samsung Galaxy A34 5G", reparacion: "Cambio de Batería Original", precio: "$34.000" },
-            
-            { modelo: "Samsung Galaxy J7 Prime", reparacion: "Módulo de Pantalla Completo", precio: "$35.000" },
-            { modelo: "Samsung Galaxy J7 Prime", reparacion: "Cambio de Batería", precio: "$18.000" },
-            
-            { modelo: "Motorola Moto G51 5G", reparacion: "Módulo de Pantalla Completo", precio: "$60.000" },
-            { modelo: "Motorola Moto G51 5G", reparacion: "Diagnóstico de Placa / PMIC", precio: "$40.000" },
-            { modelo: "Motorola Moto G51 5G", reparacion: "Cambio de Batería Original", precio: "$32.000" }
+            { marca: "TCL", modelo: "TCL 305", reparacion: "Módulo de Pantalla", precio: "$42.000" },
+            { marca: "TCL", modelo: "TCL 40 SE", reparacion: "Módulo de Pantalla", precio: "$53.000" },
+            { marca: "TCL", modelo: "TCL 40 SE", reparacion: "Pin de Carga", precio: "$19.000" }
         ];
 
-        // ==========================================
-        //  FUNCIONAMIENTO DE LA PÁGINA (NO TOCAR)
-        // ==========================================
+        // ========================================================
+        //  LÓGICA DE FILTRADO Y BUSCADOR
+        // ========================================================
         const tableBody = document.getElementById('tableBody');
         const searchInput = document.getElementById('searchInput');
         const noResults = document.getElementById('noResults');
         const preciosTable = document.getElementById('preciosTable');
+        
+        let marcaActual = 'TODOS';
 
-        // Función para renderizar los datos en la tabla
         function cargarTabla(lista) {
             tableBody.innerHTML = '';
             if (lista.length === 0) {
@@ -384,19 +413,32 @@
             });
         }
 
-        // Buscador en tiempo real
-        searchInput.addEventListener('input', (e) => {
-            const busqueda = e.target.value.toLowerCase().trim();
+        function aplicarFiltros() {
+            const busqueda = searchInput.value.toLowerCase().trim();
             
             const filtrados = datosPrecios.filter(item => {
-                return item.modelo.toLowerCase().includes(busqueda) || 
-                       item.reparacion.toLowerCase().includes(busqueda);
+                const coincideMarca = (marcaActual === 'TODOS' || item.marca === marcaActual);
+                const coincideBusqueda = item.modelo.toLowerCase().includes(busqueda) || 
+                                         item.reparacion.toLowerCase().includes(busqueda);
+                return coincideMarca && coincideBusqueda;
             });
             
             cargarTabla(filtrados);
-        });
+        }
 
-        // Carga inicial al abrir la página
+        function filtrarPorMarca(marca, boton) {
+            marcaActual = marca;
+            
+            // Cambiar clase activa en los botones
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            boton.classList.add('active');
+            
+            aplicarFiltros();
+        }
+
+        searchInput.addEventListener('input', aplicarFiltros);
+
+        // Inicializar
         cargarTabla(datosPrecios);
     </script>
 </body>
