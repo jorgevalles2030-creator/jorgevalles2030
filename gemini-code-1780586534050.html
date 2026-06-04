@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TECH FIX - Servicio Técnico Especializado</title>
+    <!-- Google Fonts & FontAwesome para Iconos -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-dark: #0f172a;
+            --bg-card: #1e293b;
+            --primary: #22c55e; /* Verde Tecnológico */
+            --primary-hover: #16a34a;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border: #334155;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: rgba(30, 41, 59, 0.8);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo span {
+            color: var(--primary);
+        }
+
+        .hero {
+            text-align: center;
+            padding: 4rem 2rem 2rem 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        /* Buscador y Controles */
+        .search-container {
+            max-width: 600px;
+            margin: 2rem auto;
+            position: relative;
+            padding: 0 1rem;
+        }
+
+        .search-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .search-wrapper i {
+            position: absolute;
+            left: 1.5rem;
+            color: var(--text-muted);
+            font-size: 1.2rem;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 1rem 1rem 1rem 3.5rem;
+            background-color: var(--bg-card);
+            border: 2px solid var(--border);
+            border-radius: 50px;
+            color: var(--text-main);
+            font-size: 1.1rem;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 15px rgba(34, 197, 94, 0.2);
+        }
+
+        /* Tabla de Presupuestos */
+        .table-section {
+            max-width: 1000px;
+            margin: 0 auto 4rem auto;
+            padding: 0 1rem;
+        }
+
+        .table-container {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        th {
+            background-color: rgba(15, 23, 42, 0.6);
+            color: var(--primary);
+            padding: 1.2rem 1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.05em;
+            border-bottom: 2px solid var(--border);
+        }
+
+        td {
+            padding: 1.2rem 1rem;
+            border-bottom: 1px solid var(--border);
+            font-size: 1rem;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover td {
+            background-color: rgba(51, 65, 85, 0.3);
+        }
+
+        .badge-reparacion {
+            background-color: rgba(34, 197, 94, 0.1);
+            color: var(--primary);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .price-tag {
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .no-results {
+            padding: 3rem;
+            text-align: center;
+            color: var(--text-muted);
+            display: none;
+        }
+
+        /* Sección de Contacto e Info de Empresa */
+        .info-section {
+            background-color: var(--bg-card);
+            border-top: 1px solid var(--border);
+            padding: 4rem 2rem;
+        }
+
+        .info-grid {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .info-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1.2rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .info-card p {
+            color: var(--text-muted);
+            margin-bottom: 0.8rem;
+        }
+
+        .info-card a {
+            color: var(--text-main);
+            text-decoration: none;
+            transition: color 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .info-card a:hover {
+            color: var(--primary);
+        }
+
+        .social-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background-color: var(--primary);
+            color: var(--bg-dark) !important;
+            font-weight: 700;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            margin-top: 0.5rem;
+            transition: transform 0.2s, background-color 0.2s !important;
+        }
+
+        .social-btn:hover {
+            background-color: var(--primary-hover) !important;
+            transform: translateY(-2px);
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            border-top: 1px solid var(--border);
+        }
+
+        @media (max-width: 600px) {
+            .hero h1 { font-size: 2rem; }
+            th, td { padding: 0.8rem 0.5rem; font-size: 0.9rem; }
+            header { justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo"><i class="fa-solid fa-microchip"></i> TECH<span>FIX</span></div>
+    </header>
+
+    <section class="hero">
+        <h1>Presupuestos Online al Instante</h1>
+        <p>Buscá la marca o modelo de tu dispositivo móvil para conocer el costo estimado de la reparación. Diagnóstico profesional y componentes de alta calidad.</p>
+    </section>
+
+    <!-- Buscador Inteligente -->
+    <div class="search-container">
+        <div class="search-wrapper">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" id="searchInput" class="search-input" placeholder="Ej: Samsung A04, módulo, batería...">
+        </div>
+    </div>
+
+    <!-- Contenedor de la Tabla -->
+    <section class="table-section">
+        <div class="table-container">
+            <table id="preciosTable">
+                <thead>
+                    <tr>
+                        <th>Modelo / Dispositivo</th>
+                        <th>Reparación / Servicio</th>
+                        <th>Presupuesto Estimado</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                    <!-- Los datos se cargan dinámicamente con JavaScript desde abajo -->
+                </tbody>
+            </table>
+            <div id="noResults" class="no-results">
+                <i class="fa-solid fa-circle-question" style="font-size: 2rem; margin-bottom: 1rem; color: var(--primary);"></i>
+                <p>No encontramos presupuestos para esa búsqueda.<br>¡Consultanos directamente por WhatsApp para darte un precio!</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Información de la Empresa -->
+    <section class="info-section">
+        <div class="info-grid">
+            <div class="info-card">
+                <h3><i class="fa-solid fa-circle-info"></i> Sobre Nosotros</h3>
+                <p>En <strong>TECH FIX</strong> realizamos hardware diagnostics avanzado y reparaciones complejas de placas base, módulos de pantalla, optimización de ciclos de carga y componentes internos.</p>
+                <p>Garantía de confianza y transparencia en cada trabajo técnico.</p>
+            </div>
+            <div class="info-card">
+                <h3><i class="fa-solid fa-address-book"></i> Canales de Contacto</h3>
+                <p><i class="fa-solid fa-envelope" style="color: var(--primary);"></i> Email: <a href="mailto:jorgevalles2030@gmail.com">jorgevalles2030@gmail.com</a></p>
+                <p><i class="fa-brands fa-instagram" style="color: var(--primary);"></i> Instagram: <a href="https://instagram.com/jor_valles" target="_blank">@jor_valles</a></p>
+                <p>¿No encontrás tu modelo? Escribinos:</p>
+                <!-- BOTÓN DE WHATSAPP: Podés cambiar el número de teléfono acá abajo en el link -->
+                <a href="https://wa.me/5491100000000?text=Hola%20Tech%20Fix,%20quería%20consultar%20un%20presupuesto" target="_blank" class="social-btn">
+                    <i class="fa-brands fa-whatsapp"></i> Consultar por WhatsApp
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        &copy; 2026 TECH FIX - Todos los derechos reservados.
+    </footer>
+
+    <!-- LÓGICA DE JAVASCRIPT: ACÁ MODIFICÁS TUS PRODUCTOS -->
+    <script>
+        // ==========================================
+        //  BASE DE DATOS DE PRECIOS (100% EDITABLE)
+        // ==========================================
+        // Podés cambiar los nombres, las reparaciones y los precios.
+        // Respetá siempre las comillas y las comas al final de cada línea.
+        
+        const datosPrecios = [
+            { modelo: "Samsung Galaxy A04", reparacion: "Módulo de Pantalla Completo", precio: "$55.000" },
+            { modelo: "Samsung Galaxy A04", reparacion: "Cambio de Batería Original", precio: "$28.000" },
+            { modelo: "Samsung Galaxy A04", reparacion: "Pin de Carga / Puerto USB", precio: "$18.000" },
+            
+            { modelo: "Samsung Galaxy A03", reparacion: "Módulo de Pantalla Completo", precio: "$48.000" },
+            { modelo: "Samsung Galaxy A03", reparacion: "Cambio de Batería Original", precio: "$26.000" },
+            
+            { modelo: "Samsung Galaxy A14", reparacion: "Módulo de Pantalla Completo", precio: "$62.000" },
+            { modelo: "Samsung Galaxy A14", reparacion: "Pin de Carga / Puerto USB", precio: "$20.000" },
+            
+            { modelo: "Samsung Galaxy A34 5G", reparacion: "Módulo de Pantalla (Amoled)", precio: "$95.000" },
+            { modelo: "Samsung Galaxy A34 5G", reparacion: "Cambio de Batería Original", precio: "$34.000" },
+            
+            { modelo: "Samsung Galaxy J7 Prime", reparacion: "Módulo de Pantalla Completo", precio: "$35.000" },
+            { modelo: "Samsung Galaxy J7 Prime", reparacion: "Cambio de Batería", precio: "$18.000" },
+            
+            { modelo: "Motorola Moto G51 5G", reparacion: "Módulo de Pantalla Completo", precio: "$60.000" },
+            { modelo: "Motorola Moto G51 5G", reparacion: "Diagnóstico de Placa / PMIC", precio: "$40.000" },
+            { modelo: "Motorola Moto G51 5G", reparacion: "Cambio de Batería Original", precio: "$32.000" }
+        ];
+
+        // ==========================================
+        //  FUNCIONAMIENTO DE LA PÁGINA (NO TOCAR)
+        // ==========================================
+        const tableBody = document.getElementById('tableBody');
+        const searchInput = document.getElementById('searchInput');
+        const noResults = document.getElementById('noResults');
+        const preciosTable = document.getElementById('preciosTable');
+
+        // Función para renderizar los datos en la tabla
+        function cargarTabla(lista) {
+            tableBody.innerHTML = '';
+            if (lista.length === 0) {
+                preciosTable.style.display = 'none';
+                noResults.style.display = 'block';
+                return;
+            }
+            
+            preciosTable.style.display = 'table';
+            noResults.style.display = 'none';
+
+            lista.forEach(item => {
+                const fila = document.createElement('tr');
+                fila.innerHTML = `
+                    <td><strong>${item.modelo}</strong></td>
+                    <td><span class="badge-reparacion">${item.reparacion}</span></td>
+                    <td><span class="price-tag">${item.precio}</span></td>
+                `;
+                tableBody.appendChild(fila);
+            });
+        }
+
+        // Buscador en tiempo real
+        searchInput.addEventListener('input', (e) => {
+            const busqueda = e.target.value.toLowerCase().trim();
+            
+            const filtrados = datosPrecios.filter(item => {
+                return item.modelo.toLowerCase().includes(busqueda) || 
+                       item.reparacion.toLowerCase().includes(busqueda);
+            });
+            
+            cargarTabla(filtrados);
+        });
+
+        // Carga inicial al abrir la página
+        cargarTabla(datosPrecios);
+    </script>
+</body>
+</html>
